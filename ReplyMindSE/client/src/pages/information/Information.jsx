@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import { useContext, useRef } from "react";
 import { Context } from "../../context/Context";
+import { NameContext } from "../../App";
 import ViewInformation from "../viewInformation/ViewInformation";
 export default function Information() {
  
@@ -18,9 +19,7 @@ export default function Information() {
   const interestsofEnterpreneur= ['Startup enthusiast','SME', 'Product enthusiast','Product Leader','Product owner etc' ]
   const interestsofCC= ['Youtube', 'Twitch', 'Twitter', 'Video Content ' ]
   const { user, dispatch, isFetching } = useContext(Context);
-  const [professionShow, setProfessionShow] = useState([])
-  const [bioShow, setBioShow] = useState("")
-  const [interestShow, setInterestShow] = useState([])
+
   const [save, setSave] = useState(true)
 
 
@@ -79,22 +78,29 @@ email = user.email;
  
 console.log("checked", checked)
 
-  const getInfo = async (e) => {
-  //  e.preventDefault();
-    if(id!== null){
-    setError(false);
-     try {
-      const res = await axios.get(`/information/info/${id}`)
-     console.log("res", res);
-     setProfessionShow(res.data.profession)
-     setInterestShow(res.data.interest)
-     setBioShow(res.data.bio)
+
+
+
+
+
+
+
+
+
+  // const getInfo = async (e) => {
+  // //  e.preventDefault();
+  //   if(id!== null){
+  //   setError(false);
+  //    try {
+  //     const res = await axios.get(`/information/info/${id}`)
+  //    console.log("res", res);
+     
     
-     } catch (err) {
-       setError(true);
-     }
-    }
-  };
+  //    } catch (err) {
+  //      setError(true);
+  //    }
+  //   }
+  // };
    
    useEffect(()=>{
     // getInfo()
@@ -105,155 +111,83 @@ console.log("checked", checked)
  
   return (
     <div className="register">
-      
+
 
       <div className="info-alignment">
-       {save=== true && <div>
+
         <span className="registerTitle">ADD Information of {user?.username}</span>
-      <form action="" className="registerForm"  onSubmit={handleSubmit}>
+        <form action="" className="registerForm" onSubmit={handleSubmit}>
           <label >Profession</label>
-          {/* <input type="text" className="registerInput"
-            placeholder="Enter your password......."
-            onChange={e => setProfession(e.target.value)} /> */}
-<select   onChange={e=>setProfession(e.target.value)} className="registerInput">
-         <option>
-          --Choose and option--
-        </option>
-        {
-        arr.map(item => {
-          return <option key={item} value={item}>{item}</option>
-        })
-      }
-      </select>
+
+          <select onChange={e => setProfession(e.target.value)} className="registerInput">
+            <option>
+              --Choose and option--
+            </option>
+            {
+              arr.map(item => {
+                return <option key={item} value={item}>{item}</option>
+              })
+            }
+          </select>
           <label >Interests</label>
           {/* <input type="text" className="registerInput"
             placeholder="Enter your password......."
             onChange={e => setInterest(e.target.value)} /> */}
-            {profession === "Marketing Professional" && 
-             <div className="list-container">
- {interestsofMP.map((item, index) => (
-  <div key={index}>
-    <input value={item} type="checkbox" onChange={handleCheck} />
-    <span className={isChecked(item)}>{item}</span>
-  </div>
-))}
-</div>}
-{profession === "Entrepreneur" && 
-             <div className="list-container">
- {interestsofEnterpreneur.map((item, index) => (
-  <div key={index}>
-    <input value={item} type="checkbox" onChange={handleCheck} />
-    <span className={isChecked(item)}>{item}</span>
-  </div>
-))}
-</div>}
-{profession === "Content Creator" && 
-             <div className="list-container">
- {interestsofCC.map((item, index) => (
-  <div key={index}>
-    <input value={item} type="checkbox" onChange={handleCheck} />
-    <span className={isChecked(item)}>{item}</span>
-  </div>
-))}
-</div>}
+          {profession === "Marketing Professional" &&
+            <div className="list-container">
+              {interestsofMP.map((item, index) => (
+                <div key={index}>
+                  <input value={item} type="checkbox" onChange={handleCheck} />
+                  <span className={isChecked(item)}>{item}</span>
+                </div>
+              ))}
+            </div>}
+          {profession === "Entrepreneur" &&
+            <div className="list-container">
+              {interestsofEnterpreneur.map((item, index) => (
+                <div key={index}>
+                  <input value={item} type="checkbox" onChange={handleCheck} />
+                  <span className={isChecked(item)}>{item}</span>
+                </div>
+              ))}
+            </div>}
+          {profession === "Content Creator" &&
+            <div className="list-container">
+              {interestsofCC.map((item, index) => (
+                <div key={index}>
+                  <input value={item} type="checkbox" onChange={handleCheck} />
+                  <span className={isChecked(item)}>{item}</span>
+                </div>
+              ))}
+            </div>}
           <label >Bio</label>
-          <input type="text" className="registerInput"
-            placeholder="Enter your password......."
+          <input type="text"  maxlength="50"  className="registerInput"
+            placeholder="Character count Max 50"
             onChange={e => setBio(e.target.value)} />
 
-          <button className="registerButton" type="submit" disabled={id!==null} >Save  
+          <button className="registerButton" type="submit" disabled={id !== null} >Save
           </button>
-            </form>
-            
-    
-      
-      {error && <span style={{color:"red", marginTop:"10px"}}>Something went wrong!</span>}
-      </div>}
-       {save=== false && <div> 
-      {/* <button type="submit" onClick= {getInfo}>view </button> */}
+        </form>
 
-      <span className="registerTitle">Update Information of {user?.username}</span>
-      <form action="" className="registerForm" onSubmit={handleSubmit}>
-      
 
-         
 
-          <label >Profession</label>
-          {/* <input type="text" className="registerInput"
-            placeholder="Enter your password......."
-            onChange={e => setProfession(e.target.value)} /> */}
-<select   onChange={e=>setProfession(e.target.value)} className="registerInput">
-         <option>
-         {professionShow}
-        </option>
-        {
-        arr.map(item => {
-          return <option key={item} value={item}>{item}</option>
-        })
-      }
-      </select>
+        {error && <span style={{ color: "red", marginTop: "10px" }}>Something went wrong!</span>}
+
+
+        {/* <button type="submit" onClick={getInfo}>view </button> */}
 
 
 
 
-          <label >Interests</label>
-          {/* <input type="text" className="registerInput"
-            placeholder="Enter your password......."
-            onChange={e => setInterest(e.target.value)} /> */}
-            {profession === "Marketing Professional" && 
-             <div className="list-container">
- {interestsofMP.map((item, index) => (
-  <div key={index}>
-    <input value={item} type="checkbox" onChange={handleCheck} />
-    <span className={isChecked(item)}>{item}</span>
-  </div>
-))}
-</div>}
-{profession === "Entrepreneur" && 
-             <div className="list-container">
- {interestsofEnterpreneur.map((item, index) => (
-  <div key={index}>
-    <input value={item} type="checkbox" onChange={handleCheck} />
-    <span className={isChecked(item)}>{item}</span>
-  </div>
-))}
-</div>}
-{profession === "Content Creator" && 
-             <div className="list-container">
- {interestsofCC.map((item, index) => (
-  <div key={index}>
-    <input value={item} type="checkbox" onChange={handleCheck} />
-    <span className={isChecked(item)}>{item}</span>
-  </div>
-))}
-</div>}
-
-
-
-          <label >Bio</label>
-          <input type="text" className="registerInput"
-            placeholder="Enter your password......."
-            onChange={e => setBio(e.target.value)} />
-
-          <button className="registerButton" type="submit" >Update
-          
-          </button>
-
-      </form>
-      
-      
-      {error && <span style={{color:"red", marginTop:"10px"}}>Something went wrong!</span>}
-
-      </div>}
 
 
       </div>
       {/* <ViewInformation varOne={id}/> */}
 
-     
 
 
-      
+
+
     </div>
   )
 }

@@ -85,5 +85,32 @@ router.delete("/info/:id", async (req, res) => {
     res.status(500).json(err);
   }
 });
+
+
+//get all user info
+
+router.get("/info/", async (req, res) => {
+  const username = req.query.user;
+  const catName = req.query.cat;
+  
+  try {
+    let posts;
+    if (username) {
+      posts = await Information.find({ username });
+    } else if (catName) {
+      posts = await Information.find({
+        categories: {
+          $in: [catName],
+        },
+      });
+    } else {
+      posts = await Information.find();
+    }
+    res.status(200).json(posts);
+  } catch (err) {
+    res.status(500).json(err);
+  }
+});
+
   
 module.exports = router;
