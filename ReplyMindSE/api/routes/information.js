@@ -29,21 +29,7 @@ router.post("/info", async (req, res) => {
 
 
 
-  // router.get("/info/:id", async (req, res) => {
-  // //  console.log('post', Post)
-  //   try {                                                                                                                                                                                                                      
-  //     const user = await Information.findById(req.params.id);
-  
-  //     if(Information.profession== null && Information.bio ==  null) {
-  //       console.log("no info available");
-  //     }
-  //     console.log(Information.profession);
-  //     const { password, ...others } = user._doc;
-  //     res.status(200).json(others);
-  //   } catch (err) {
-  //     res.status(500).json(err);
-  //   }
-  // });
+
 
 
 //update info by id 

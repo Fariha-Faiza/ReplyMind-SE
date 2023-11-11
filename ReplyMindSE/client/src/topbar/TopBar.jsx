@@ -34,10 +34,15 @@ export default function Topbar() {
             </Link>
             </li>
          
+            {user &&  <li className="topListItem">
+         <Link className="link" to="/login">
+              LogOut
+            </Link>
+            </li>}
         
          
-          <li className="topListItem" onClick={handleLogout}>
-        {user &&  "LOGOUT"}</li>
+          {/* <li className="topListItem" onClick={handleLogout}>
+        {user &&  "LOGOUT"}</li> */}
 
         </ul>
       </div>

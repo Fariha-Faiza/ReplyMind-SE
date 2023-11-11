@@ -3,10 +3,9 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import { useContext, useRef } from "react";
 import { Context } from "../../context/Context";
-import { NameContext } from "../../App";
-import ViewInformation from "../viewInformation/ViewInformation";
+
 export default function Information() {
- 
+
   const [profession, setProfession] = useState([])
   var [userName, setUserName] = useState("")
   var [email, setEmail] = useState("")
@@ -14,16 +13,12 @@ export default function Information() {
   const [result, setResult] = useState("")
   const [id, setID] = useState("")
   const [error, setError] = useState(false);
-  const arr= ['Marketing Professional', 'Entrepreneur', 'Content Creator']
-  const interestsofMP= ['Growth marketing', 'Digital Marketing', 'Product Marketing','Paid marketing', 'Organic marketing']
-  const interestsofEnterpreneur= ['Startup enthusiast','SME', 'Product enthusiast','Product Leader','Product owner etc' ]
-  const interestsofCC= ['Youtube', 'Twitch', 'Twitter', 'Video Content ' ]
+  const arr = ['Marketing Professional', 'Entrepreneur', 'Content Creator']
+  const interestsofMP = ['Growth marketing', 'Digital Marketing', 'Product Marketing', 'Paid marketing', 'Organic marketing']
+  const interestsofEnterpreneur = ['Startup enthusiast', 'SME', 'Product enthusiast', 'Product Leader', 'Product owner etc']
+  const interestsofCC = ['Youtube', 'Twitch', 'Twitter', 'Video Content ']
   const { user, dispatch, isFetching } = useContext(Context);
-
-  const [save, setSave] = useState(true)
-
-
-
+ 
   const [checked, setChecked] = useState([]);
 
 
@@ -40,75 +35,36 @@ export default function Information() {
     setChecked(updatedList);
   };
 
- 
-
   // Return classes based on whether item is checked
   var isChecked = (item) =>
     checked.includes(item) ? "checked-item" : "not-checked-item";
 
-userName = user.username;
-email = user.email;
-
-
-
+  userName = user.username;
+  email = user.email;
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError(false);
-     try {
+    try {
       const res = await axios.post("/information/info", {
-       
-        username : userName,
-        email : email,
+
+        username: userName,
+        email: email,
         profession,
-        interest : checked,
+        interest: checked,
         bio
       });
-     
-     console.log(res)
+
+      console.log(res)
       setResult(res);
       setID(res.data._id)
-      setSave(false)
-       //res.data && window.location.replace("/view");
-     } catch (err) {
-       setError(true);
-     }
+     
+      //res.data && window.location.replace("/view");
+    } catch (err) {
+      setError(true);
+    }
   };
 
- 
-console.log("checked", checked)
-
-
-
-
-
-
-
-
-
-
-  // const getInfo = async (e) => {
-  // //  e.preventDefault();
-  //   if(id!== null){
-  //   setError(false);
-  //    try {
-  //     const res = await axios.get(`/information/info/${id}`)
-  //    console.log("res", res);
-     
-    
-  //    } catch (err) {
-  //      setError(true);
-  //    }
-  //   }
-  // };
-   
-   useEffect(()=>{
-    // getInfo()
-
-   })
-
-  //console.log("id", id)
- 
   return (
     <div className="register">
 
@@ -161,7 +117,7 @@ console.log("checked", checked)
               ))}
             </div>}
           <label >Bio</label>
-          <input type="text"  maxlength="50"  className="registerInput"
+          <input type="text" maxlength="50" className="registerInput"
             placeholder="Character count Max 50"
             onChange={e => setBio(e.target.value)} />
 
@@ -169,25 +125,9 @@ console.log("checked", checked)
           </button>
         </form>
 
-
-
         {error && <span style={{ color: "red", marginTop: "10px" }}>Something went wrong!</span>}
 
-
-        {/* <button type="submit" onClick={getInfo}>view </button> */}
-
-
-
-
-
-
       </div>
-      {/* <ViewInformation varOne={id}/> */}
-
-
-
-
-
     </div>
   )
 }
