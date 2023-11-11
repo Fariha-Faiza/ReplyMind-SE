@@ -58,18 +58,20 @@ router.post("/info", async (req, res) => {
 //delete info 
 router.delete("/info/:id", async (req, res) => {
   try {
-    const post = await Information.findById(req.params.id);
-    
-      try {
-        await post.delete();
+    const updatedPost = await Information.findByIdAndDelete(
+      req.params.id,
+      {
+        $set: req.body,
+      },
+      { new: true }
+    );
+    console.log("updatedPost", updatedPost)
         res.status(200).json("info has been deleted...");
       } catch (err) {
         res.status(500).json(err);
       }
    
-  } catch (err) {
-    res.status(500).json(err);
-  }
+  
 });
 
 
