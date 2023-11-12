@@ -11,7 +11,7 @@
   },
   
     "engines": {
-      "NODE_VERSION": "21.1.0"
+      "node": ">=14 <21.1.0"
     
   },
   "name": "api",
