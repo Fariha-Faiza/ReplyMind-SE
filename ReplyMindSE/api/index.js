@@ -20,3 +20,8 @@ app.use("/api/information", infoRoute)
 app.listen("5000", () => {
     console.log("Backend is running.");
   });
+//app crash handler for wrong input
+  process.on('uncaughtException', function (err) {
+    console.error(err);
+    console.log("Node NOT Exiting...");
+  });

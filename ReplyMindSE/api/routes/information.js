@@ -55,7 +55,7 @@ router.post("/info", async (req, res) => {
     }
   });
 
-//delete info 
+//delete info by id
 router.delete("/info/:id", async (req, res) => {
   try {
     const updatedPost = await Information.findByIdAndDelete(
