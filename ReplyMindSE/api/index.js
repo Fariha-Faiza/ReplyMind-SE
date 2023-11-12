@@ -20,6 +20,13 @@ app.use("/api/information", infoRoute)
 app.listen("5000", () => {
     console.log("Backend is running.");
   });
+const PORT = process.env.PORT 
+  app.listen(PORT , ()=> {
+
+    console.log("backend is running" + PORT);
+}
+);
+
 //app crash handler for wrong input
   process.on('uncaughtException', function (err) {
     console.error(err);
